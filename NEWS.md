@@ -1,3 +1,3 @@
-# percent 0.0.9000 (development version)
+# percent 0.1.0
 
-* Added initial functions.
+* CRAN submission.
