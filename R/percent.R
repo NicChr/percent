@@ -20,7 +20,10 @@
 #' # Formatting options
 #' format(percent(2.674), digits = 2, symbol = " (%)")
 #' # Prints nicely in data frames (and tibbles)
-#' data.frame(perc = percent(seq(0, 1, 0.1)))
+#' x <- seq(0, 1, 0.1)
+#' df <- data.frame(row.names = seq_along(x))
+#' df$perc <- percent(x)
+#' df
 #'
 #' @export
 #' @rdname percent
