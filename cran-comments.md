@@ -1,5 +1,3 @@
-## R CMD check results
-
 * This is a new release.
 
 ## Test environments
@@ -25,7 +23,7 @@
     'lastMiKTeXException'
 
 ❯ On ubuntu-gcc-release (r-release)
-  checking CRAN incoming feasibility ... [6s/20s] NOTE
+  checking CRAN incoming feasibility ... [6s/19s] NOTE
   Maintainer: ‘Nick Christofides <nick.christofides.r@gmail.com>’
   
   New submission
@@ -35,7 +33,7 @@
   Skipping checking HTML validation: no command 'tidy' found
 
 ❯ On fedora-clang-devel (r-devel)
-  checking CRAN incoming feasibility ... [6s/22s] NOTE
+  checking CRAN incoming feasibility ... [6s/23s] NOTE
   Maintainer: ‘Nick Christofides <nick.christofides.r@gmail.com>’
   
   New submission
