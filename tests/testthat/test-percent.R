@@ -47,7 +47,7 @@ test_that("percentages", {
   )
   expect_identical(
     factor(percent(x)),
-    factor(percent(x), levels = sort(unique(percent(x))))
+    factor(percent(x), levels = percent(sort(unique(x))))
   )
   expect_identical(
     percent(x),
