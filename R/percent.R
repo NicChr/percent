@@ -11,7 +11,19 @@
 #' @examples
 #' library(percent)
 #'
-#' percent(0:100)
+#' percent(0:10)
+#'
+#' # Convert proportions to percentages
+#' percent(seq(0, 1, 0.1) * 100)
+#'
+#' # You can use round() as usual
+#' p <- percent(15.56)
+#' round(p)
+#' round(p, digits = 1)
+#'
+#' signif(p, 2)
+#' floor(p)
+#' ceiling(p)
 #'
 #' # We can do basic math operations as usual
 #' 10 * percent(c(0, 50, 200))
@@ -112,6 +124,23 @@ Ops.percent <- function(e1, e2){
     e2 <- unclass(e2)
   }
   NextMethod(.Generic)
+}
+Math.percent <- function(x, ...){
+  rounding_math <- switch(.Generic,
+                          `floor` =,
+                          `ceiling` =,
+                          `trunc` =,
+                          `round` =,
+                          `signif` = TRUE, FALSE)
+  x <- unclass(x)
+  if (rounding_math){
+   x <- x * 100
+   out <- NextMethod(.Generic)
+   percent(out)
+  } else {
+    out <- NextMethod(.Generic)
+    new_percent(out)
+  }
 }
 new_percent <- function(x){
   class(x) <- "percent"

@@ -18,7 +18,19 @@ A lightweight class for printing proportions as percentages.
 \examples{
 library(percent)
 
-percent(0:100)
+percent(0:10)
+
+# Convert proportions to percentages
+percent(seq(0, 1, 0.1) * 100)
+
+# You can use round() as usual
+p <- percent(15.56)
+round(p)
+round(p, digits = 1)
+
+signif(p, 2)
+floor(p)
+ceiling(p)
 
 # We can do basic math operations as usual
 10 * percent(c(0, 50, 200))

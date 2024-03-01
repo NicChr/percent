@@ -34,6 +34,7 @@ register_all_s3_methods <- function(){
   register_s3_method("base", "rep", "percent")
   register_s3_method("base", "rep_len", "percent")
   register_s3_method("base", "Ops", "percent")
+  register_s3_method("base", "Math", "percent")
 }
 
 on_package_load <- function(pkg, expr){
