@@ -103,7 +103,7 @@ unique.percent <- function(x, incomparables = FALSE,
                            fromLast = FALSE, nmax = NA, ...){
   cl <- oldClass(x)
   class(x) <- NULL
-  out <- NextMethod("[")
+  out <- NextMethod("unique")
   class(out) <- cl
   out
 }
