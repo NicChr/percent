@@ -28,9 +28,10 @@ p <- percent(15.56)
 round(p)
 round(p, digits = 1)
 
-signif(p, 2)
-floor(p)
-ceiling(p)
+p2 <- percent(0.0005)
+signif(p2, 2)
+floor(p2)
+ceiling(p2)
 
 # We can do basic math operations as usual
 10 * percent(c(0, 50, 200))

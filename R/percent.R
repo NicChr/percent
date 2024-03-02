@@ -21,9 +21,10 @@
 #' round(p)
 #' round(p, digits = 1)
 #'
-#' signif(p, 2)
-#' floor(p)
-#' ceiling(p)
+#' p2 <- percent(0.0005)
+#' signif(p2, 2)
+#' floor(p2)
+#' ceiling(p2)
 #'
 #' # We can do basic math operations as usual
 #' 10 * percent(c(0, 50, 200))
@@ -54,19 +55,24 @@ as.character.percent <- function(x, ...){
   }
 }
 
-format.percent <- function(x, symbol = "%", ...){
+format.percent <- function(x, symbol = "%",
+                           # dec_digits = 2,
+                           ...){
   if (length(x) == 0){
     character()
   } else {
     paste0(format(unclass(x) * 100, ...), symbol)
+    # paste0(format(round(unclass(x) * 100, dec_digits), ...), symbol)
   }
 }
 
-print.percent <- function(x, max = NULL, ...){
+print.percent <- function(x, max = NULL,
+                          # dec_digits = 2,
+                          ...){
   out <- x
   N <- length(out)
   if (N == 0){
-    print("percent(numeric(0))")
+    print("percent(numeric())")
     return(invisible(x))
   }
   if (is.null(max)) {
@@ -80,6 +86,7 @@ print.percent <- function(x, max = NULL, ...){
                     N - max, "entries ]\n")
   }
   print(as.character(out), ...)
+  # print(as.character(round(out, dec_digits)), ...)
   cat(suffix)
   invisible(x)
 }
