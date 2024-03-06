@@ -3,7 +3,8 @@
 #' @description
 #' A lightweight class for printing proportions as percentages.
 #'
-#' @param x Percentages.
+#' @param x Percentage values for `percent()` and \cr
+#' proportions for `as_percent()`.
 #'
 #' @returns
 #' A class of object `percent`.
@@ -14,14 +15,14 @@
 #' percent(0:10)
 #'
 #' # Convert proportions to percentages
-#' percent(seq(0, 1, 0.1) * 100)
+#' as_percent(seq(0, 1, 0.1))
 #'
 #' # You can use round() as usual
 #' p <- percent(15.56)
 #' round(p)
 #' round(p, digits = 1)
 #'
-#' p2 <- percent(0.0005)
+#' p2 <- as_percent(0.0005)
 #' signif(p2, 2)
 #' floor(p2)
 #' ceiling(p2)
@@ -29,11 +30,12 @@
 #' # We can do basic math operations as usual
 #' 10 * percent(c(0, 50, 200))
 #' percent(10) + percent(20)
+#' as_percent(0.1) + as_percent(0.2)
 #'
 #' # Formatting options
 #' format(percent(2.674), digits = 2, symbol = " (%)")
 #' # Prints nicely in data frames (and tibbles)
-#' x <- seq(0, 1, 0.1)
+#' x <- seq(0, 0.5, 0.025)
 #' df <- data.frame(row.names = seq_along(x))
 #' df$perc <- percent(x)
 #' df
@@ -42,9 +44,17 @@
 #' @rdname percent
 percent <- function(x = numeric()){
   if (!is.numeric(x)){
-    stop("x must be a numeric vector")
+    stop("x must be a numeric vector of percentage values")
   }
   new_percent(x / 100)
+}
+#' @export
+#' @rdname percent
+as_percent <- function(x){
+  if (!is.numeric(x)){
+    stop("x must be a numeric vector of proportions")
+  }
+  new_percent(x)
 }
 
 as.character.percent <- function(x, ...){
@@ -56,7 +66,7 @@ as.character.percent <- function(x, ...){
 }
 
 format.percent <- function(x, symbol = "%", trim = TRUE,
-                           digits = 1,
+                           digits = 3,
                            ...){
   if (length(x) == 0){
     out <- character()
@@ -73,7 +83,7 @@ format.percent <- function(x, symbol = "%", trim = TRUE,
 }
 
 print.percent <- function(x, max = NULL, trim = TRUE,
-                          digits = 1,
+                          digits = 3,
                           ...){
   out <- x
   N <- length(out)

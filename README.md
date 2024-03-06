@@ -66,34 +66,19 @@ percent(1:10) + percent(20)
 
 ### Proportions
 
-When you have proportions, just convert them to percentages before using
-`percent()`
+When you have proportions, use `as_percent`
 
 ``` r
 prop <- seq(0, 1, 0.1)
 
-percent(prop * 100)
+as_percent(prop)
 #>  [1] "0%"   "10%"  "20%"  "30%"  "40%"  "50%"  "60%"  "70%"  "80%"  "90%" 
 #> [11] "100%"
 ```
 
-To avoid this task of always multiplying by 100, one can just create a
-simple wrapper.
-
-The reason this isn’t already implemented is because percent is designed
-to be lightweight and has only one function `percent`.
-
-``` r
-as_percent <- function(x){
-  percent(x * 100)
-}
-as_percent(0.05)
-#> [1] "5%"
-```
-
 ### Formatting
 
-To round it to a specified number of decimal places, we can just use
+To round it to a specified number of decimal places, we can use
 `round()`
 
 ``` r
@@ -107,9 +92,9 @@ round(p, digits = 1)
 The other rounding operators will also work as expected
 
 ``` r
-p2 <- percent(0.0005)
+p2 <- as_percent(0.0005)
 signif(p2, 2)
-#> [1] "5e-04%"
+#> [1] "0.05%"
 floor(p2)
 #> [1] "0%"
 ceiling(p2)
@@ -119,13 +104,12 @@ ceiling(p2)
 We can also format a percent using the `format()` function
 
 ``` r
-# 2 significant digits
 format(percent(2.674), digits = 2, symbol = "(%)")
-#> [1] "2.7(%)"
+#> [1] "2.67(%)"
 ```
 
-A key note to point out is the digits in `format()` are significant and
-not decimal. To round using decimal places, use `round()` beforehand.
+A key note to point out is the digits in `format.percent()` are decimal
+places and not significant digits.
 
 ``` r
 format(round(percent(2.674), 2), symbol = "(%)")
