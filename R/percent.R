@@ -55,18 +55,20 @@ as.character.percent <- function(x, ...){
   }
 }
 
-format.percent <- function(x, symbol = "%",
+format.percent <- function(x, symbol = "%", trim = TRUE,
                            # dec_digits = 2,
                            ...){
   if (length(x) == 0){
-    character()
+    out <- character()
   } else {
-    paste0(format(unclass(x) * 100, ...), symbol)
+    out <- paste0(format(unclass(x) * 100, trim = trim, ...), symbol)
     # paste0(format(round(unclass(x) * 100, dec_digits), ...), symbol)
   }
+  names(out) <- names(x)
+  out
 }
 
-print.percent <- function(x, max = NULL,
+print.percent <- function(x, max = NULL, trim = TRUE,
                           # dec_digits = 2,
                           ...){
   out <- x
@@ -85,7 +87,7 @@ print.percent <- function(x, max = NULL,
     suffix <- paste(" [ reached 'max' / getOption(\"max.print\") -- omitted",
                     N - max, "entries ]\n")
   }
-  print(as.character(out), ...)
+  print(format(out, trim = trim), ...)
   # print(as.character(round(out, dec_digits)), ...)
   cat(suffix)
   invisible(x)

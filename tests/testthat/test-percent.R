@@ -10,7 +10,7 @@ test_that("percentages", {
   expect_error(percent(letters))
   expect_identical(as.character(percent()), character())
   expect_identical(format(percent(numeric())), character())
-  expect_identical(format(percent(1:10), symbol = " (%)"),
+  expect_identical(format(percent(1:10), symbol = " (%)", trim = FALSE),
                    paste(format(1:10), "(%)"))
   expect_identical(print_percent,
                    percent(perc))
