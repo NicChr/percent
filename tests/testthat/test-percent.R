@@ -69,11 +69,11 @@ test_that("percentages", {
 
   expect_equal(
     round(percentages, 0),
-    percent(round(unclass(percentages) * 100, 0))
+    percent(round_half_up(unclass(percentages) * 100, 0))
   )
   expect_equal(
     signif(percentages, 2),
-    percent(signif(unclass(percentages) * 100, 2))
+    percent(signif_half_up(unclass(percentages) * 100, 2))
   )
   expect_equal(
     floor(percentages),

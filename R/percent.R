@@ -56,12 +56,28 @@ as_percent <- function(x){
   }
   new_percent(x)
 }
+round_half_up <- function(x, digits = 0){
+  if (is.null(digits) || (length(digits) == 1 && digits == Inf)){
+    return(x)
+  }
+  trunc(
+    abs(x) * 10^digits + 0.5 +
+      sqrt(.Machine$double.eps)
+  ) /
+    10^digits * sign(x)
+}
+signif_half_up <- function(x, digits = 6){
+  if (is.null(digits) || (length(digits) == 1 && digits == Inf)){
+    return(x)
+  }
+  round_half_up(x, digits - ceiling(log10(abs(x))))
+}
 
-as.character.percent <- function(x, ...){
+as.character.percent <- function(x, digits = 3, ...){
   if (length(x) == 0){
     character()
   } else {
-    paste0(unclass(x) * 100, "%")
+    paste0(unclass(round(x, digits) * 100), "%")
   }
 }
 
@@ -71,11 +87,7 @@ format.percent <- function(x, symbol = "%", trim = TRUE,
   if (length(x) == 0){
     out <- character()
   } else {
-    out <- x
-    if (!is.null(digits)){
-     out <- round(out, digits)
-    }
-    out <- paste0(format(unclass(out) * 100, trim = trim, digits = NULL, ...),
+    out <- paste0(format(unclass(round(x, digits) * 100), trim = trim, digits = NULL, ...),
                   symbol)
   }
   names(out) <- names(x)
@@ -102,7 +114,6 @@ print.percent <- function(x, max = NULL, trim = TRUE,
                     N - max, "entries ]\n")
   }
   print(format(out, trim = trim, digits = digits), ...)
-  # print(as.character(round(out, dec_digits)), ...)
   cat(suffix)
   invisible(x)
 }
@@ -158,7 +169,13 @@ Math.percent <- function(x, ...){
   x <- unclass(x)
   if (rounding_math){
    x <- x * 100
-   out <- NextMethod(.Generic)
+   if (.Generic == "round"){
+     out <- do.call(round_half_up, list(x, ...))
+   } else if (.Generic == "signif"){
+     out <- do.call(signif_half_up, list(x, ...))
+   } else {
+     out <- NextMethod(.Generic)
+   }
    percent(out)
   } else {
     out <- NextMethod(.Generic)
@@ -169,3 +186,4 @@ new_percent <- function(x){
   class(x) <- "percent"
   x
 }
+
